@@ -49,14 +49,10 @@ class ReportsTable
                                 : ReportReason::from((string) $state)
                         ) {
                             ReportReason::Spam => 'Спам',
-                            ReportReason::Harassment =>
-                                'Оскорбления',
-                            ReportReason::InappropriateContent =>
-                                'Неприемлемый контент',
-                            ReportReason::Scam =>
-                                'Мошенничество',
-                            ReportReason::Other =>
-                                'Другое',
+                            ReportReason::Harassment => 'Оскорбления',
+                            ReportReason::InappropriateContent => 'Неприемлемый контент',
+                            ReportReason::Scam => 'Мошенничество',
+                            ReportReason::Other => 'Другое',
                         }
                     ),
 
@@ -69,17 +65,13 @@ class ReportsTable
                                 ? $state
                                 : ReportStatus::from((string) $state)
                         ) {
-                            ReportStatus::Pending =>
-                                'Ожидает рассмотрения',
+                            ReportStatus::Pending => 'Ожидает рассмотрения',
 
-                            ReportStatus::Reviewing =>
-                                'На рассмотрении',
+                            ReportStatus::Reviewing => 'На рассмотрении',
 
-                            ReportStatus::Resolved =>
-                                'Решена',
+                            ReportStatus::Resolved => 'Решена',
 
-                            ReportStatus::Dismissed =>
-                                'Отклонена',
+                            ReportStatus::Dismissed => 'Отклонена',
                         }
                     ),
 
@@ -100,31 +92,23 @@ class ReportsTable
                 SelectFilter::make('status')
                     ->label('Статус')
                     ->options([
-                        ReportStatus::Pending->value =>
-                            'Ожидает рассмотрения',
+                        ReportStatus::Pending->value => 'Ожидает рассмотрения',
 
-                        ReportStatus::Reviewing->value =>
-                            'На рассмотрении',
+                        ReportStatus::Reviewing->value => 'На рассмотрении',
 
-                        ReportStatus::Resolved->value =>
-                            'Решена',
+                        ReportStatus::Resolved->value => 'Решена',
 
-                        ReportStatus::Dismissed->value =>
-                            'Отклонена',
+                        ReportStatus::Dismissed->value => 'Отклонена',
                     ]),
 
                 SelectFilter::make('reason')
                     ->label('Причина')
                     ->options([
                         ReportReason::Spam->value => 'Спам',
-                        ReportReason::Harassment->value =>
-                            'Оскорбления',
-                        ReportReason::InappropriateContent->value =>
-                            'Неприемлемый контент',
-                        ReportReason::Scam->value =>
-                            'Мошенничество',
-                        ReportReason::Other->value =>
-                            'Другое',
+                        ReportReason::Harassment->value => 'Оскорбления',
+                        ReportReason::InappropriateContent->value => 'Неприемлемый контент',
+                        ReportReason::Scam->value => 'Мошенничество',
+                        ReportReason::Other->value => 'Другое',
                     ]),
 
                 SelectFilter::make('reportable_type')

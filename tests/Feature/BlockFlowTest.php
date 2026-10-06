@@ -1,7 +1,9 @@
 <?php
 
 use App\Actions\BlockUserAction;
+use App\Actions\UnblockUserAction;
 use App\Actions\UsersAreBlockedAction;
+use App\Models\Block;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -73,27 +75,27 @@ it('allows a user to remove their own block', function () {
     $blocker = User::factory()->create();
     $blocked = User::factory()->create();
 
-    app(\App\Actions\BlockUserAction::class)
+    app(BlockUserAction::class)
         ->execute(
             blocker: $blocker,
             blocked: $blocked,
         );
 
     expect(
-        \App\Models\Block::query()
+        Block::query()
             ->where('blocker_id', $blocker->id)
             ->where('blocked_id', $blocked->id)
             ->exists()
     )->toBeTrue();
 
-    app(\App\Actions\UnblockUserAction::class)
+    app(UnblockUserAction::class)
         ->execute(
             blocker: $blocker,
             blocked: $blocked,
         );
 
     expect(
-        \App\Models\Block::query()
+        Block::query()
             ->where('blocker_id', $blocker->id)
             ->where('blocked_id', $blocked->id)
             ->exists()

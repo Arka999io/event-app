@@ -23,17 +23,13 @@ class ReportForm
                 Select::make('status')
                     ->label('Статус')
                     ->options([
-                        ReportStatus::Pending->value =>
-                            'Ожидает рассмотрения',
+                        ReportStatus::Pending->value => 'Ожидает рассмотрения',
 
-                        ReportStatus::Reviewing->value =>
-                            'На рассмотрении',
+                        ReportStatus::Reviewing->value => 'На рассмотрении',
 
-                        ReportStatus::Resolved->value =>
-                            'Решена',
+                        ReportStatus::Resolved->value => 'Решена',
 
-                        ReportStatus::Dismissed->value =>
-                            'Отклонена',
+                        ReportStatus::Dismissed->value => 'Отклонена',
                     ])
                     ->required(),
             ]);

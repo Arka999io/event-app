@@ -8,11 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-
 /**
  * @property int|null $unread_messages_count
  */
-
 #[Fillable([
     'event_id',
     'user_id',

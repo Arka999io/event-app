@@ -3,8 +3,10 @@
 namespace App\Policies;
 
 use App\Actions\UsersAreBlockedAction;
+use App\Enums\EventStatus;
 use App\Models\Event;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class EventPolicy
 {
@@ -12,18 +14,23 @@ class EventPolicy
         private UsersAreBlockedAction $usersAreBlocked,
     ) {}
 
-    public function view(User $user, Event $event): bool
+    public function view(?User $user, Event $event): Response|bool
     {
-        if ($user->id === $event->organizer_id) {
+        if ($user !== null && $user->id === $event->organizer_id) {
             return true;
         }
 
-        $organizer = $event->organizer;
+        // Черновик видит только организатор. 404, чтобы не раскрывать, что такой ID существует.
+        if ($event->status === EventStatus::Draft) {
+            return Response::denyAsNotFound();
+        }
 
-        return ! $this->usersAreBlocked->execute(
-            $user,
-            $organizer,
-        );
+        // Гости могут смотреть опубликованные, идущие, завершённые и отменённые события.
+        if ($user === null) {
+            return true;
+        }
+
+        return ! $this->usersAreBlocked->execute($user, $event->organizer);
     }
 
     public function create(User $user): bool
@@ -47,8 +54,8 @@ class EventPolicy
             && ! in_array(
                 $event->status,
                 [
-                    \App\Enums\EventStatus::Completed,
-                    \App\Enums\EventStatus::Cancelled,
+                    EventStatus::Completed,
+                    EventStatus::Cancelled,
                 ],
                 true
             );

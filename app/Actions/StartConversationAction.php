@@ -30,6 +30,12 @@ class StartConversationAction
             );
         }
 
+        if ($event->status === EventStatus::Draft) {
+            throw new DomainException(
+                'You cannot start a conversation for an unpublished event.'
+            );
+        }
+
         if (in_array($event->status, [
             EventStatus::Completed,
             EventStatus::Cancelled,

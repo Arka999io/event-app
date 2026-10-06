@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use App\Enums\ApplicationStatus;
+use Database\Factories\ApplicationFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Database\Factories\ApplicationFactory;
 
 /**
  * @property ApplicationStatus $status
@@ -21,7 +21,7 @@ use Database\Factories\ApplicationFactory;
 class Application extends Model
 {
     /** @use HasFactory<ApplicationFactory> */
-use HasFactory;
+    use HasFactory;
 
     /**
      * @return BelongsTo<Event, $this>
@@ -45,6 +45,4 @@ use HasFactory;
             'status' => ApplicationStatus::class,
         ];
     }
-
-
 }

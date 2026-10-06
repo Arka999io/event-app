@@ -4,19 +4,19 @@ namespace App\Http\Controllers\Web;
 
 use App\Actions\AcceptApplicationAction;
 use App\Actions\RejectApplicationAction;
+use App\Actions\StartConversationAction;
 use App\Actions\WaitlistApplicationAction;
+use App\Events\ApplicationStatusChanged;
 use App\Http\Controllers\Controller;
 use App\Models\Application;
+use App\Models\Conversation;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View as ViewFacade;
-use App\Actions\StartConversationAction;
-use App\Events\ApplicationStatusChanged;
-use App\Models\Conversation;
-use Illuminate\Http\JsonResponse;
 
 class ApplicationController extends Controller
 {
@@ -55,12 +55,12 @@ class ApplicationController extends Controller
             ->paginate(20);
 
         /** @var view-string $view */
-            $view = 'applications.received';
+        $view = 'applications.received';
 
-            return ViewFacade::make($view, [
-                'applications' => $applications,
-            ]);
-                }
+        return ViewFacade::make($view, [
+            'applications' => $applications,
+        ]);
+    }
 
     public function sent(Request $request): View
     {

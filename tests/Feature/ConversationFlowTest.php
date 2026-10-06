@@ -1,13 +1,14 @@
 <?php
 
+use App\Actions\BlockUserAction;
+use App\Actions\MarkConversationAsReadAction;
+use App\Actions\SendMessageAction;
 use App\Actions\StartConversationAction;
+use App\Enums\EventStatus;
 use App\Models\Conversation;
 use App\Models\Event;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Actions\SendMessageAction;
-use App\Actions\BlockUserAction;
-use App\Actions\MarkConversationAsReadAction;
 
 uses(RefreshDatabase::class);
 
@@ -205,7 +206,7 @@ it('makes the conversation read-only when the event is completed', function () {
     );
 
     $event->update([
-        'status' => \App\Enums\EventStatus::Completed,
+        'status' => EventStatus::Completed,
     ]);
 
     expect(fn () => app(SendMessageAction::class)->execute(
@@ -236,7 +237,7 @@ it('makes the conversation read-only when the event is cancelled', function () {
     );
 
     $event->update([
-        'status' => \App\Enums\EventStatus::Cancelled,
+        'status' => EventStatus::Cancelled,
     ]);
 
     expect(fn () => app(SendMessageAction::class)->execute(

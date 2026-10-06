@@ -2,32 +2,34 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Actions\CancelEventAction;
+use App\Actions\CompleteEventAction;
+use App\Actions\CreateApplicationAction;
 use App\Actions\CreateEventAction;
+use App\Actions\DeleteEventPhotoAction;
+use App\Actions\PublishEventAction;
+use App\Actions\StartConversationAction;
+use App\Actions\UpdateEventAction;
+use App\Actions\UploadEventPhotosAction;
 use App\DTO\CreateEventDTO;
+use App\Enums\ApplicationStatus;
 use App\Enums\EventStatus;
 use App\Enums\GenderPreference;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEventRequest;
+use App\Http\Requests\UpdateEventRequest;
 use App\Http\Requests\UploadEventPhotosRequest;
 use App\Models\Category;
 use App\Models\Event;
 use App\Models\Photo;
+use App\Models\Review;
+use App\Models\User;
 use Carbon\CarbonImmutable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\View as ViewFacade;
-use App\Actions\PublishEventAction;
-use App\Actions\CreateApplicationAction;
-use App\Actions\StartConversationAction;
-use App\Actions\UploadEventPhotosAction;
-use App\Actions\DeleteEventPhotoAction;
-use App\Actions\UpdateEventAction;
-use App\Http\Requests\UpdateEventRequest;
-use App\Actions\CancelEventAction;
-use App\Actions\CompleteEventAction;
-use App\Enums\ApplicationStatus;
-use App\Models\Review;
 
 class EventController extends Controller
 {
@@ -141,9 +143,7 @@ class EventController extends Controller
 
     public function show(Request $request, Event $event): View
     {
-        if ($request->user() !== null) {
-            $this->authorize('view', $event);
-        }
+        $this->authorize('view', $event);
 
         $event->load([
             'organizer.profile.avatar',
@@ -157,7 +157,7 @@ class EventController extends Controller
         $reviewedUserIds = collect();
 
         if ($request->user() !== null) {
-            /** @var \App\Models\User $currentUser */
+            /** @var User $currentUser */
             $currentUser = $request->user();
 
             $application = $event->applications()
@@ -224,7 +224,7 @@ class EventController extends Controller
     ): RedirectResponse {
         $validated = $request->validated();
 
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         $data = new CreateEventDTO(
@@ -278,8 +278,7 @@ class EventController extends Controller
                     $validated['ends_at']
                 )
                 : null,
-            meetingAddress:
-                $validated['meeting_address'] ?? null,
+            meetingAddress: $validated['meeting_address'] ?? null,
             venueAddress: $validated['venue_address'],
             minAge: isset($validated['min_age'])
                 ? (int) $validated['min_age']
@@ -368,7 +367,7 @@ class EventController extends Controller
         Event $event,
         CreateApplicationAction $action,
     ): RedirectResponse {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         $action->execute(
@@ -386,7 +385,7 @@ class EventController extends Controller
         Event $event,
         StartConversationAction $action,
     ): RedirectResponse {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         $conversation = $action->execute(
@@ -403,7 +402,7 @@ class EventController extends Controller
         Event $event,
         UploadEventPhotosAction $action,
     ): RedirectResponse {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         abort_unless(
@@ -423,7 +422,7 @@ class EventController extends Controller
             403
         );
 
-        /** @var array<int, \Illuminate\Http\UploadedFile> $photos */
+        /** @var array<int, UploadedFile> $photos */
         $photos = $request->file('photos');
 
         $action->execute(
@@ -445,7 +444,7 @@ class EventController extends Controller
         Photo $photo,
         DeleteEventPhotoAction $action,
     ): RedirectResponse {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         abort_unless(
@@ -508,6 +507,4 @@ class EventController extends Controller
             'genderPreferences' => GenderPreference::cases(),
         ]);
     }
-
-    
 }

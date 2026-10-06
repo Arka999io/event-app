@@ -1,10 +1,11 @@
 <?php
 
 use App\Actions\BlockUserAction;
+use App\Enums\EventStatus;
 use App\Models\Event;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Enums\EventStatus;
+use Illuminate\Support\Facades\Gate;
 
 uses(RefreshDatabase::class);
 
@@ -96,4 +97,17 @@ it('allows only the organizer to start an event', function () {
 
     expect($organizer->can('start', $event))->toBeTrue()
         ->and($stranger->can('start', $event))->toBeFalse();
+});
+
+it('denies viewing a draft to everyone except the organizer', function () {
+    $organizer = User::factory()->create();
+    $stranger = User::factory()->create();
+
+    $event = Event::factory()->draft()->create([
+        'organizer_id' => $organizer->id,
+    ]);
+
+    expect($organizer->can('view', $event))->toBeTrue()
+        ->and($stranger->can('view', $event))->toBeFalse()
+        ->and(Gate::allows('view', $event))->toBeFalse();
 });

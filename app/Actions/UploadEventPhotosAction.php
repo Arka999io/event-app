@@ -12,7 +12,7 @@ use Throwable;
 class UploadEventPhotosAction
 {
     /**
-     * @param array<int, UploadedFile> $photos
+     * @param  array<int, UploadedFile>  $photos
      */
     public function execute(
         Event $event,

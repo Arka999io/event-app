@@ -84,8 +84,7 @@ class UserController extends Controller
             'reviewsCount' => $reviewsCount,
             'averageRating' => $averageRating,
             'blockedByCurrentUser' => $blockedByCurrentUser,
-            'currentUserBlockedByProfileUser' =>
-                $currentUserBlockedByProfileUser,
+            'currentUserBlockedByProfileUser' => $currentUserBlockedByProfileUser,
         ]);
     }
 

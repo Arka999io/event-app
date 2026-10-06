@@ -463,7 +463,7 @@ class DemoSeeder extends Seeder
                 ['organizer', 'Отлично, поднимайся.'],
                 ['participant', 'Спасибо за вечер, всё было здорово!'],
                 ['organizer', 'Спасибо, что пришла!'],
-                                ['participant', 'Обязательно приду ещё на какой-нибудь киновечер.'],
+                ['participant', 'Обязательно приду ещё на какой-нибудь киновечер.'],
                 ['organizer', 'Буду рада видеть тебя снова!'],
                 ['participant', 'Хорошего вечера!'],
                 ['organizer', 'И тебе!'],
@@ -645,7 +645,7 @@ class DemoSeeder extends Seeder
     }
 
     /**
-     * @param array<int, array{0: string, 1: string}> $messages
+     * @param  array<int, array{0: string, 1: string}>  $messages
      */
     private function seedConversation(
         Conversation $conversation,

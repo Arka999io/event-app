@@ -95,7 +95,7 @@ it('does not allow banning the same user twice', function () {
             reason: 'Another reason.',
         )
     )->toThrow(
-        \DomainException::class,
+        DomainException::class,
         'This user is already banned.'
     );
 });
@@ -150,7 +150,7 @@ it('does not allow unbanning a user who is not banned', function () {
         fn () => app(UnbanUserAction::class)
             ->execute($user)
     )->toThrow(
-        \DomainException::class,
+        DomainException::class,
         'This user is not banned.'
     );
 });

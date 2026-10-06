@@ -35,7 +35,7 @@ class EventFactory extends Factory
         ];
     }
 
-        public function draft(): static
+    public function draft(): static
     {
         return $this->state(fn (array $attributes) => [
             'status' => EventStatus::Draft,

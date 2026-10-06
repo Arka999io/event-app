@@ -3,13 +3,13 @@
 namespace App\Actions;
 
 use App\Enums\EventStatus;
+use App\Events\MessageSent;
 use App\Models\Conversation;
 use App\Models\Event;
 use App\Models\Message;
 use App\Models\User;
-use DomainException;
-use App\Events\MessageSent;
 use App\Notifications\NewMessageNotification;
+use DomainException;
 
 class SendMessageAction
 {
@@ -64,29 +64,29 @@ class SendMessageAction
         }
 
         $message = $conversation->messages()->create([
-        'sender_id' => $sender->id,
-        'body' => $body,
-    ]);
+            'sender_id' => $sender->id,
+            'body' => $body,
+        ]);
 
-    $conversation->touch();
+        $conversation->touch();
 
-    $message->load('sender');
+        $message->load('sender');
 
-    $conversation->load('event');
+        $conversation->load('event');
 
-    $recipient = $sender->id === $conversation->user_id
-        ? $organizer
-        : $user;
+        $recipient = $sender->id === $conversation->user_id
+            ? $organizer
+            : $user;
 
-    $recipient->notify(
-        new NewMessageNotification(
-            message: $message,
-            conversation: $conversation,
-        )
-    );
+        $recipient->notify(
+            new NewMessageNotification(
+                message: $message,
+                conversation: $conversation,
+            )
+        );
 
-    MessageSent::dispatch($message);
+        MessageSent::dispatch($message);
 
-    return $message;
+        return $message;
     }
 }

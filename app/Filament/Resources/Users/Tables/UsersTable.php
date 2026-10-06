@@ -2,16 +2,16 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
-use Filament\Actions\EditAction;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\TernaryFilter;
-use Filament\Tables\Table;
 use App\Actions\BanUserAction;
 use App\Actions\UnbanUserAction;
 use App\Models\User;
 use Filament\Actions\Action;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TernaryFilter;
+use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 
 class UsersTable
@@ -50,8 +50,7 @@ class UsersTable
                 IconColumn::make('email_verified_at')
                     ->label('Email подтверждён')
                     ->boolean(
-                        fn ($state): bool =>
-                            $state !== null
+                        fn ($state): bool => $state !== null
                     ),
 
                 IconColumn::make('is_admin')
@@ -80,7 +79,7 @@ class UsersTable
                     ->toggleable(
                         isToggledHiddenByDefault: true
                     ),
-        
+
                 TextColumn::make('created_at')
                     ->label('Регистрация')
                     ->dateTime('d.m.Y H:i')
@@ -115,7 +114,6 @@ class UsersTable
                     ->falseLabel('Только обычные пользователи'),
             ])
 
-
             ->recordActions([
                 EditAction::make()
                     ->label('Редактировать'),
@@ -134,8 +132,7 @@ class UsersTable
                             ->maxLength(2000),
                     ])
                     ->visible(
-                        fn (User $record): bool =>
-                            ! $record->is_banned
+                        fn (User $record): bool => ! $record->is_banned
                             && $record->id !== Auth::id()
                     )
                     ->action(
@@ -158,8 +155,7 @@ class UsersTable
                         'Доступ к аккаунту будет восстановлен. Отменённые мероприятия автоматически восстановлены не будут.'
                     )
                     ->visible(
-                        fn (User $record): bool =>
-                            $record->is_banned
+                        fn (User $record): bool => $record->is_banned
                     )
                     ->action(
                         function (User $record): void {

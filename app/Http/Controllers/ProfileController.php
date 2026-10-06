@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\UpdateAvatarAction;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\UpdateAvatarRequest;
+use App\Http\Requests\UpdatePersonalProfileRequest;
+use App\Models\Profile;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
-use App\Actions\UpdateAvatarAction;
-use App\Http\Requests\UpdateAvatarRequest;
-use App\Models\Profile;
-use App\Http\Requests\UpdatePersonalProfileRequest;
 
 class ProfileController extends Controller
 {
@@ -45,7 +47,7 @@ class ProfileController extends Controller
         UpdateAvatarRequest $request,
         UpdateAvatarAction $action,
     ): RedirectResponse {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         /** @var Profile|null $profile */
@@ -53,7 +55,7 @@ class ProfileController extends Controller
 
         abort_if($profile === null, 404);
 
-        /** @var \Illuminate\Http\UploadedFile $avatar */
+        /** @var UploadedFile $avatar */
         $avatar = $request->file('avatar');
 
         $action->execute(
@@ -68,9 +70,9 @@ class ProfileController extends Controller
     }
 
     public function updatePersonalProfile(
-    UpdatePersonalProfileRequest $request,
+        UpdatePersonalProfileRequest $request,
     ): RedirectResponse {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         /** @var Profile|null $profile */

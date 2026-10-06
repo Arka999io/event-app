@@ -3,8 +3,8 @@
 namespace App\Filament\Resources\Users\Schemas;
 
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Auth;
@@ -35,8 +35,7 @@ class UserForm
                         'Даёт пользователю доступ к административной панели.'
                     )
                     ->disabled(
-                        fn ($record): bool =>
-                            $record !== null
+                        fn ($record): bool => $record !== null
                             && $record->id === Auth::id()
                     ),
 

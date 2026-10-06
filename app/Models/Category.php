@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use Database\Factories\CategoryFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Database\Factories\CategoryFactory;
 
 #[Fillable([
     'name',
@@ -16,7 +16,7 @@ use Database\Factories\CategoryFactory;
 class Category extends Model
 {
     /** @use HasFactory<CategoryFactory> */
-use HasFactory;
+    use HasFactory;
 
     protected function casts(): array
     {

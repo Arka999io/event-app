@@ -6,6 +6,7 @@ use App\Enums\ReportReason;
 use App\Enums\ReportStatus;
 use App\Models\Event;
 use App\Models\Message;
+use App\Models\Profile;
 use App\Models\Report;
 use App\Models\User;
 use Filament\Infolists\Components\TextEntry;
@@ -40,7 +41,7 @@ class ReportInfolist
                     ->formatStateUsing(
                         function ($state): string {
                             if ($state instanceof User) {
-                                /** @var \App\Models\Profile|null $profile */
+                                /** @var Profile|null $profile */
                                 $profile = $state->profile;
 
                                 $firstName = $profile !== null
@@ -90,15 +91,13 @@ class ReportInfolist
                 TextEntry::make('reportable.sender.name')
                     ->label('Автор сообщения')
                     ->visible(
-                        fn (Report $record): bool =>
-                            $record->reportable instanceof Message
+                        fn (Report $record): bool => $record->reportable instanceof Message
                     ),
 
                 TextEntry::make('reportable.sender.email')
                     ->label('Email автора сообщения')
                     ->visible(
-                        fn (Report $record): bool =>
-                            $record->reportable instanceof Message
+                        fn (Report $record): bool => $record->reportable instanceof Message
                     ),
 
                 TextEntry::make('reportable.body')
@@ -106,8 +105,7 @@ class ReportInfolist
                     ->placeholder('Сообщение недоступно')
                     ->columnSpanFull()
                     ->visible(
-                        fn (Report $record): bool =>
-                            $record->reportable instanceof Message
+                        fn (Report $record): bool => $record->reportable instanceof Message
                     ),
 
                 TextEntry::make(
@@ -116,8 +114,7 @@ class ReportInfolist
                     ->label('Мероприятие')
                     ->placeholder('—')
                     ->visible(
-                        fn (Report $record): bool =>
-                            $record->reportable instanceof Message
+                        fn (Report $record): bool => $record->reportable instanceof Message
                     ),
 
                 TextEntry::make(
@@ -125,8 +122,7 @@ class ReportInfolist
                 )
                     ->label('ID чата')
                     ->visible(
-                        fn (Report $record): bool =>
-                            $record->reportable instanceof Message
+                        fn (Report $record): bool => $record->reportable instanceof Message
                     ),
 
                 /*
@@ -140,8 +136,7 @@ class ReportInfolist
                         'filament.reports.message-context'
                     )
                     ->visible(
-                        fn (Report $record): bool =>
-                            $record->reportable instanceof Message
+                        fn (Report $record): bool => $record->reportable instanceof Message
                     )
                     ->columnSpanFull(),
 
@@ -156,20 +151,15 @@ class ReportInfolist
                                     (string) $state
                                 )
                         ) {
-                            ReportReason::Spam =>
-                                'Спам',
+                            ReportReason::Spam => 'Спам',
 
-                            ReportReason::Harassment =>
-                                'Оскорбления или преследование',
+                            ReportReason::Harassment => 'Оскорбления или преследование',
 
-                            ReportReason::InappropriateContent =>
-                                'Неприемлемый контент',
+                            ReportReason::InappropriateContent => 'Неприемлемый контент',
 
-                            ReportReason::Scam =>
-                                'Мошенничество',
+                            ReportReason::Scam => 'Мошенничество',
 
-                            ReportReason::Other =>
-                                'Другое',
+                            ReportReason::Other => 'Другое',
                         }
                     ),
 
@@ -189,17 +179,13 @@ class ReportInfolist
                                     (string) $state
                                 )
                         ) {
-                            ReportStatus::Pending =>
-                                'Ожидает рассмотрения',
+                            ReportStatus::Pending => 'Ожидает рассмотрения',
 
-                            ReportStatus::Reviewing =>
-                                'На рассмотрении',
+                            ReportStatus::Reviewing => 'На рассмотрении',
 
-                            ReportStatus::Resolved =>
-                                'Решена',
+                            ReportStatus::Resolved => 'Решена',
 
-                            ReportStatus::Dismissed =>
-                                'Отклонена',
+                            ReportStatus::Dismissed => 'Отклонена',
                         }
                     ),
 

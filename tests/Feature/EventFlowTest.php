@@ -1,18 +1,18 @@
 <?php
 
+use App\Actions\CancelEventAction;
+use App\Actions\CompleteEventAction;
 use App\Actions\CreateEventAction;
+use App\Actions\PublishEventAction;
+use App\Actions\StartEventAction;
 use App\DTO\CreateEventDTO;
 use App\Enums\EventStatus;
 use App\Enums\GenderPreference;
 use App\Models\Category;
+use App\Models\Event;
 use App\Models\User;
 use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Actions\PublishEventAction;
-use App\Models\Event;
-use App\Actions\CancelEventAction;
-use App\Actions\CompleteEventAction;
-use App\Actions\StartEventAction;
 
 uses(RefreshDatabase::class);
 

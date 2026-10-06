@@ -34,6 +34,8 @@ class ReportController extends Controller
         Request $request,
         Event $event,
     ): View {
+        $this->authorize('view', $event);
+
         return $this->makeForm(
             reportable: $event,
             type: 'event',
@@ -72,6 +74,8 @@ class ReportController extends Controller
         Event $event,
         CreateReportAction $action,
     ): RedirectResponse {
+        $this->authorize('view', $event);
+
         return $this->store(
             request: $request,
             reportable: $event,
@@ -143,8 +147,7 @@ class ReportController extends Controller
                 reason: ReportReason::from(
                     $validated['reason']
                 ),
-                description:
-                    $validated['description'] ?? null,
+                description: $validated['description'] ?? null,
             );
         } catch (DomainException $exception) {
             return back()

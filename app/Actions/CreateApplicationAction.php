@@ -49,5 +49,5 @@ class CreateApplicationAction
         );
 
         return $application;
-            }
+    }
 }

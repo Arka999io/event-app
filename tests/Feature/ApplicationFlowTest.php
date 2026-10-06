@@ -1,15 +1,15 @@
 <?php
 
+use App\Actions\AcceptApplicationAction;
 use App\Actions\CreateApplicationAction;
+use App\Actions\RejectApplicationAction;
+use App\Actions\WaitlistApplicationAction;
+use App\Actions\WithdrawApplicationAction;
 use App\Enums\ApplicationStatus;
+use App\Models\Application;
 use App\Models\Event;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Actions\AcceptApplicationAction;
-use App\Models\Application;
-use App\Actions\RejectApplicationAction;
-use App\Actions\WithdrawApplicationAction;
-use App\Actions\WaitlistApplicationAction;
 
 uses(RefreshDatabase::class);
 

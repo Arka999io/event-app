@@ -6,9 +6,9 @@ use App\Enums\ApplicationStatus;
 use App\Enums\EventStatus;
 use App\Models\Application;
 use App\Models\Event;
+use App\Notifications\ApplicationAcceptedNotification;
 use DomainException;
 use Illuminate\Support\Facades\DB;
-use App\Notifications\ApplicationAcceptedNotification;
 
 class AcceptApplicationAction
 {

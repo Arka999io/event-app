@@ -1,14 +1,14 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Web\EventController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Web\ConversationController;
 use App\Http\Controllers\Web\ApplicationController;
-use App\Http\Controllers\Web\UserController;
+use App\Http\Controllers\Web\ConversationController;
+use App\Http\Controllers\Web\EventController;
 use App\Http\Controllers\Web\NotificationController;
 use App\Http\Controllers\Web\ReportController;
 use App\Http\Controllers\Web\ReviewController;
+use App\Http\Controllers\Web\UserController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -72,8 +72,8 @@ Route::middleware([
         '/events/{event}',
         [EventController::class, 'update']
     )
-    ->whereNumber('event')
-    ->name('events.update');
+        ->whereNumber('event')
+        ->name('events.update');
 
     Route::post('/events', [EventController::class, 'store'])
         ->name('events.store');
@@ -86,8 +86,8 @@ Route::middleware([
         '/events/{event}/cancel',
         [EventController::class, 'cancel']
     )
-    ->whereNumber('event')
-    ->name('events.cancel');
+        ->whereNumber('event')
+        ->name('events.cancel');
 
     Route::post(
         '/events/{event}/complete',
@@ -129,8 +129,8 @@ Route::middleware([
     Route::post('/conversations/{conversation}/messages', [ConversationController::class, 'sendMessage'])
         ->whereNumber('conversation')
         ->name('conversations.messages.store');
-        Route::get('/applications/received', [ApplicationController::class, 'received'])
-    ->name('applications.received');
+    Route::get('/applications/received', [ApplicationController::class, 'received'])
+        ->name('applications.received');
 
     Route::get('/applications/sent', [ApplicationController::class, 'sent'])
         ->name('applications.sent');

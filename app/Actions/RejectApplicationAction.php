@@ -6,9 +6,9 @@ use App\Enums\ApplicationStatus;
 use App\Enums\EventStatus;
 use App\Models\Application;
 use App\Models\Event;
+use App\Notifications\ApplicationRejectedNotification;
 use DomainException;
 use Illuminate\Support\Facades\DB;
-use App\Notifications\ApplicationRejectedNotification;
 
 class RejectApplicationAction
 {

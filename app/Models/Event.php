@@ -6,20 +6,21 @@ use App\Enums\EventStatus;
 use App\Enums\GenderPreference;
 use Database\Factories\EventFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Support\Carbon;
 
 /**
  * @property EventStatus $status
  * @property GenderPreference $gender_preference
- * @property \Illuminate\Support\Carbon $starts_at
- * @property \Illuminate\Support\Carbon|null $ends_at
- * @property \Illuminate\Support\Carbon|null $published_at
+ * @property Carbon $starts_at
+ * @property Carbon|null $ends_at
+ * @property Carbon|null $published_at
  */
 #[Fillable([
     'organizer_id',
@@ -113,7 +114,7 @@ class Event extends Model
     }
 
     /**
-     * @param Builder<Event> $query
+     * @param  Builder<Event>  $query
      * @return Builder<Event>
      */
     public function scopeVisibleTo(Builder $query, User $user): Builder

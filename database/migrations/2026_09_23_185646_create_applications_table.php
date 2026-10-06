@@ -9,30 +9,30 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-public function up(): void
-{
-    Schema::create('applications', function (Blueprint $table) {
-        $table->id();
+    public function up(): void
+    {
+        Schema::create('applications', function (Blueprint $table) {
+            $table->id();
 
-        $table->foreignId('event_id')
-            ->constrained()
-            ->cascadeOnDelete();
+            $table->foreignId('event_id')
+                ->constrained()
+                ->cascadeOnDelete();
 
-        $table->foreignId('applicant_id')
-            ->constrained('users')
-            ->cascadeOnDelete();
+            $table->foreignId('applicant_id')
+                ->constrained('users')
+                ->cascadeOnDelete();
 
-        $table->text('cover_letter')->nullable();
+            $table->text('cover_letter')->nullable();
 
-        $table->string('status')->default('pending');
+            $table->string('status')->default('pending');
 
-        $table->timestamps();
+            $table->timestamps();
 
-        $table->unique(['event_id', 'applicant_id']);
-        $table->index(['event_id', 'status']);
-        $table->index(['applicant_id', 'status']);
-    });
-}
+            $table->unique(['event_id', 'applicant_id']);
+            $table->index(['event_id', 'status']);
+            $table->index(['applicant_id', 'status']);
+        });
+    }
 
     /**
      * Reverse the migrations.

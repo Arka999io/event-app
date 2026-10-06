@@ -38,14 +38,13 @@ class ConversationController extends Controller
                     );
             })
             ->withCount([
-                'messages as unread_messages_count' =>
-                    fn (Builder $query) => $query
-                        ->where(
-                            'sender_id',
-                            '!=',
-                            $user->id
-                        )
-                        ->whereNull('read_at'),
+                'messages as unread_messages_count' => fn (Builder $query) => $query
+                    ->where(
+                        'sender_id',
+                        '!=',
+                        $user->id
+                    )
+                    ->whereNull('read_at'),
             ])
             ->with([
                 'event.organizer.profile.avatar',
@@ -191,8 +190,7 @@ class ConversationController extends Controller
             if ($request->expectsJson()) {
                 return response()->json(
                     [
-                        'message' =>
-                            $exception->getMessage(),
+                        'message' => $exception->getMessage(),
                     ],
                     422
                 );
