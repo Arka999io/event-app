@@ -367,6 +367,8 @@ class EventController extends Controller
         Event $event,
         CreateApplicationAction $action,
     ): RedirectResponse {
+        $this->authorize('view', $event);
+
         /** @var User $user */
         $user = $request->user();
 

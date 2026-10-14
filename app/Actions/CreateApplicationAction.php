@@ -12,6 +12,10 @@ use DomainException;
 
 class CreateApplicationAction
 {
+    public function __construct(
+        private UsersAreBlockedAction $usersAreBlocked,
+    ) {}
+
     public function execute(
         User $applicant,
         Event $event,
@@ -23,6 +27,10 @@ class CreateApplicationAction
 
         if ($event->organizer_id === $applicant->id) {
             throw new DomainException('You cannot apply to your own event.');
+        }
+
+        if ($this->usersAreBlocked->execute($applicant, $event->organizer)) {
+            throw new DomainException('You cannot apply to this event.');
         }
 
         if ($event->status !== EventStatus::Published) {
